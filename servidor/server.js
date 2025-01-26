@@ -1,68 +1,41 @@
-const express = require('express');
+const express = require("express");
+const cors = require("cors");
+
 const app = express();
-const cors = require('cors');
-
-app.use(express.json());
 app.use(cors());
+app.use(express.json());
 
-let usuarios = [];
+let objetos = []; // Lista de esmaltes
+let id = 1;
 
-app.post('/usuarios', (req, res) => {
-    const { nome, email } = req.body;
-    
-    if (!nome || !email) {
-        return res.status(400).json({ erro: 'Nome e email são obrigatórios' });
-    }
-
-    const novoUsuario = { id: usuarios.length + 1, nome, email };
-    usuarios.push(novoUsuario);
-    
-    res.status(201).json(novoUsuario);
+// Listar esmaltes
+app.get("/objetos", (req, res) => {
+  res.json(objetos);
 });
 
-app.get('/usuarios', (req, res) => {
-    res.status(200).json(usuarios);
+// Cadastrar esmalte
+app.post("/objetos", (req, res) => {
+  const novoObjeto = { id: id++, ...req.body };
+  objetos.push(novoObjeto);
+  res.status(201).json(novoObjeto);
 });
 
-app.get('/usuarios/:id', (req, res) => {
-    const { id } = req.params;
-    const usuario = usuarios.find(u => u.id === parseInt(id));
-    
-    if (!usuario) {
-        return res.status(404).json({ erro: 'Usuário não encontrado' });
-    }
-    
-    res.status(200).json(usuario);
+// Alterar esmalte
+app.put("/objetos/:id", (req, res) => {
+  const { id } = req.params;
+  const index = objetos.findIndex((obj) => obj.id === Number(id));
+  if (index !== -1) {
+    objetos[index] = { id: Number(id), ...req.body };
+    res.json(objetos[index]);
+  } else {
+    res.status(404).send("Esmalte não encontrado");
+  }
 });
 
-app.put('/usuarios/:id', (req, res) => {
-    const { id } = req.params;
-    const { nome, email } = req.body;
-    
-    const usuario = usuarios.find(u => u.id === parseInt(id));
-    
-    if (!usuario) {
-        return res.status(404).json({ erro: 'Usuário não encontrado' });
-    }
-    
-    usuario.nome = nome || usuario.nome;
-    usuario.email = email || usuario.email;
-    
-    res.status(200).json(usuario);
+// Remover esmalte
+app.delete("/objetos/:id", (req, res) => {
+  objetos = objetos.filter((obj) => obj.id !== Number(req.params.id));
+  res.status(204).send();
 });
 
-app.delete('/usuarios/:id', (req, res) => {
-    const { id } = req.params;
-    const index = usuarios.findIndex(u => u.id === parseInt(id));
-    
-    if (index === -1) {
-        return res.status(404).json({ erro: 'Usuário não encontrado' });
-    }
-    
-    usuarios.splice(index, 1);
-    res.status(204).send();
-});
-
-app.listen(3000, () => {
-    console.log('Servidor rodando na porta 3000');
-});
+app.listen(5000, () => console.log("Servidor rodando na porta 5000"));
