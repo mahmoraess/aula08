@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import styles from "../styles/Form.module.css";
 
 const Registro = () => {
   const [form, setForm] = useState({
@@ -32,16 +33,58 @@ const Registro = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Cadastrar Esmalte</h2>
-      <input name="nome" placeholder="Nome" onChange={handleChange} required />
-      <input name="descricao" placeholder="Descrição" onChange={handleChange} required />
-      <input name="cor" placeholder="Cor" onChange={handleChange} required />
-      <input name="preco" type="number" placeholder="Preço" onChange={handleChange} required />
-      <input name="quantidade" type="number" placeholder="Quantidade" onChange={handleChange} required />
-      <input name="marca" placeholder="Marca" onChange={handleChange} required />
-      <button type="submit">Cadastrar</button>
-    </form>
+    <div className={styles.container}>
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <h2 className={styles.title}>Cadastrar Esmalte</h2>
+        <input
+          className={styles.input}
+          name="nome"
+          placeholder="Nome"
+          onChange={handleChange}
+          required
+        />
+        <input
+          className={styles.input}
+          name="descricao"
+          placeholder="Descrição"
+          onChange={handleChange}
+          required
+        />
+        <input
+          className={styles.input}
+          name="cor"
+          placeholder="Cor"
+          onChange={handleChange}
+          required
+        />
+        <input
+          className={styles.input}
+          name="preco"
+          type="number"
+          placeholder="Preço"
+          onChange={handleChange}
+          required
+        />
+        <input
+          className={styles.input}
+          name="quantidade"
+          type="number"
+          placeholder="Quantidade"
+          onChange={handleChange}
+          required
+        />
+        <input
+          className={styles.input}
+          name="marca"
+          placeholder="Marca"
+          onChange={handleChange}
+          required
+        />
+        <button className={styles.button} type="submit">
+          Cadastrar
+        </button>
+      </form>
+    </div>
   );
 };
 

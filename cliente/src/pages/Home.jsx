@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-import styles from "./styles/Home.module.css";
+import styles from "../styles/Home.module.css";
 
 const Home = () => {
   const [esmaltes, setEsmaltes] = useState([]);
@@ -82,55 +82,56 @@ const Home = () => {
   );
 
   return (
-    <div className="home">
+    <div className={styles.container}>
       <header>
-        <h1>★ Gerenciador de Esmaltes ★</h1>
+        <h1 className={styles.title}>★ Gerenciador de Esmaltes ★</h1>
         <nav>
-          <Link to="/registro">Cadastrar Novo Esmalte</Link>
+          <Link to="/registro" className={`${styles.button} ${styles.cadastrar}`}>Cadastrar Novo Esmalte</Link>
         </nav>
       </header>
 
-      <div className="filtro">
+      <div className={styles.filtro}>
         <input
           type="text"
           placeholder="Buscar esmalte..."
           value={filtro}
           onChange={(e) => setFiltro(e.target.value)}
+          className={styles.input}
         />
-        <button onClick={orderAz}>Ordenar A-Z</button>
-        <button onClick={orderZa}>Ordenar Z-A</button>
-        <button onClick={orderPriceAsc}>Preço: Menor para Maior</button>
-        <button onClick={orderPriceDesc}>Preço: Maior para Menor</button>
-        <button onClick={gerarPDF}>Gerar PDF</button>
+        <button onClick={orderAz} className={styles.button}>Ordenar A-Z</button>
+        <button onClick={orderZa} className={styles.button}>Ordenar Z-A</button>
+        <button onClick={orderPriceAsc} className={styles.button}>Preço: Menor para Maior</button>
+        <button onClick={orderPriceDesc} className={styles.button}>Preço: Maior para Menor</button>
+        <button onClick={gerarPDF} className={styles.button}>Gerar PDF</button>
       </div>
 
       {loading ? (
         <p>Carregando...</p>
       ) : esmaltesFiltrados.length > 0 ? (
-        <table>
+        <table className={styles.table}>
           <thead>
             <tr>
-              <th>Nome</th>
-              <th>Descrição</th>
-              <th>Cor</th>
-              <th>Preço</th>
-              <th>Quantidade</th>
-              <th>Marca</th>
-              <th>Ações</th>
+              <th className={styles.th}>Nome</th>
+              <th className={styles.th}>Descrição</th>
+              <th className={styles.th}>Cor</th>
+              <th className={styles.th}>Preço</th>
+              <th className={styles.th}>Quantidade</th>
+              <th className={styles.th}>Marca</th>
+              <th className={styles.th}>Ações</th>
             </tr>
           </thead>
           <tbody>
             {esmaltesFiltrados.map((esm) => (
-              <tr key={esm.id}>
-                <td>{esm.nome}</td>
-                <td>{esm.descricao}</td>
-                <td>{esm.cor}</td>
-                <td>{esm.preco}</td>
-                <td>{esm.quantidade}</td>
-                <td>{esm.marca}</td>
+              <tr key={esm.id} className="tr">
+                <td className={styles.td}>{esm.nome}</td>
+                <td className={styles.td}>{esm.descricao}</td>
+                <td className={styles.td}>{esm.cor}</td>
+                <td className={styles.td}>{esm.preco}</td>
+                <td className={styles.td}>{esm.quantidade}</td>
+                <td className={styles.td}>{esm.marca}</td>
                 <td>
-                  <Link to={`/alterar/${esm.id}`}>Editar</Link>
-                  <button onClick={() => removerEsmalte(esm.id)}>Remover</button>
+                  <Link to={`/alterar/${esm.id}`} className={`${styles.link} ${styles.edit}`}>Editar</Link>
+                  <button onClick={() => removerEsmalte(esm.id)} className={`${styles.button} ${styles.remove}`}>Remover</button>
                 </td>
               </tr>
             ))}

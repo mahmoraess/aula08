@@ -6,7 +6,7 @@ app.use(cors());
 app.use(express.json());
 
 let objetos = []; // Lista de esmaltes
-let id = 1;
+let id = 0;
 
 // Listar esmaltes
 app.get("/objetos", (req, res) => {
