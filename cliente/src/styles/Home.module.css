@@ -104,10 +104,6 @@
     font-weight: bold;
 }
 
-.link:hover {
-    text-decoration: underline;
-}
-
 /* Botões de ação */
 .action {
     padding: 5px 10px;
